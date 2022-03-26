@@ -1,0 +1,45 @@
+
+h1, #error-msg {
+    text-align: center;
+}
+
+#error-msg {
+    color: red;
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+form {
+    width: clamp(200px, 50vw, 400px);
+    margin: auto;
+    padding: 20px;
+    align-items: center;
+}
+
+.form-elements-container {
+    margin-top: 50px;
+    gap: 15px;
+}
+
+.form-element {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+    gap: 20px;
+}
+
+.buttons-container > * {
+    padding: 10px 20px;
+    background-color: thistle;
+    font-size: 1.1em;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+}

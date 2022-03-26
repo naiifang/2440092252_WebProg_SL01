@@ -1,0 +1,28 @@
+nav > * {
+    margin: auto 10px;
+}
+
+.hello {
+    margin-top: 150px;
+    font-size: 1.5em;
+    line-height: 1.75em;
+    text-align: center;
+}
+
+.hello span {
+    font-weight: bold;
+}
+
+@media screen and (max-width: 1024px){
+    header {
+        font-size: 1em;
+    }
+
+    .app-name {
+        font-size: 1.1em;
+    }
+
+    nav > * {
+        margin: auto 5px;
+    }
+}

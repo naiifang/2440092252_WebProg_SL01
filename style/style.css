@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main {
+    min-height: 90vh;
+    padding: 30px clamp(50px, 10%, 100px) 0;
+    align-items: center;
+}
+
+header {
+    height: 10vh;
+    background-color: thistle;
+    font-size: 1.05em;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.app-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.grid {
+    display: grid;
+}
+
+.current {
+    font-weight: bold;
+}
