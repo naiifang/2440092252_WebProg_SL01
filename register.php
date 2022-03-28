@@ -44,6 +44,8 @@ if (isset($_POST["register"])) {
             // balik ke halaman welcome
             header("Location: welcome.php");
             exit;
+        } else {
+            $error = true;
         }
     } else {
         $error = true;
