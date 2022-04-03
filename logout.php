@@ -1,6 +1,6 @@
 <?php
 
 session_start();
-$_SESSION["verified"] = false;
+$_SESSION["verified"] = null;
 
 header("Location: welcome.php");

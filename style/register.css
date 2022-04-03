@@ -3,7 +3,7 @@ h1 {
     text-align: center;
 }
 
-#error-msg {
+.error-msg {
     color: red;
     font-weight: 600;
     margin-top: 30px;

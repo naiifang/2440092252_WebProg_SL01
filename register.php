@@ -1,55 +1,11 @@
 <?php
 
 session_start();
-$error = false;
 
 // kalau sudah logged in, gabisa akses page ini
 if (isset($_SESSION["verified"]) && $_SESSION["verified"]) {
     header("Location: home.php");
     exit;
-}
-
-if (isset($_POST["register"])) {
-    // cek password
-    if ($_POST["password"] == $_POST["confirmPassword"]) {
-
-        $_SESSION["namaDepan"] = $_POST["namaDepan"];
-        $_SESSION["namaTengah"] = $_POST["namaTengah"];
-        $_SESSION["namaBelakang"] = $_POST["namaBelakang"];
-        $_SESSION["tempatLahir"] = $_POST["tempatLahir"];
-        $_SESSION["tanggalLahir"] = $_POST["tanggalLahir"];
-        $_SESSION["NIK"] = $_POST["NIK"];
-        $_SESSION["kewarganegaraan"] = $_POST["kewarganegaraan"];
-        $_SESSION["email"] = $_POST["email"];
-        $_SESSION["HP"] = $_POST["HP"];
-        $_SESSION["alamat"] = $_POST["alamat"];
-        $_SESSION["kodepos"] = $_POST["kodepos"];
-        $_SESSION["username"] = $_POST["username"];
-        $_SESSION["password"] = $_POST["password"];
-
-        // cek uploaded file
-        $fileName = $_FILES["foto"]["name"];
-        $fileName = str_replace(' ', '', $fileName); // handle nama file yang ada spasi, tpi blm bisa handle file dgn nama yg sama
-        $tmpName = $_FILES["foto"]["tmp_name"];
-
-        $allowedExt = ["png", "jpg", "jpeg"];
-        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-        if (in_array($ext, $allowedExt)) {
-            $_SESSION["foto"] = $fileName;
-
-            // pindahkan file dari temporary ke terupload
-            $dirUpload = "uploaded/";
-            $terupload = move_uploaded_file($tmpName, $dirUpload . $fileName);
-
-            // balik ke halaman welcome
-            header("Location: welcome.php");
-            exit;
-        } else {
-            $error = true;
-        }
-    } else {
-        $error = true;
-    }
 }
 
 ?>
@@ -73,7 +29,7 @@ if (isset($_POST["register"])) {
 
     <main>
         <h1>Register</h1>
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="./prosesRegister.php" method="POST" enctype="multipart/form-data">
             <div class="form-elements-container grid">
                 <div class="form-element">
                     <label for="namaDepan"> Nama Depan </label>
@@ -144,8 +100,16 @@ if (isset($_POST["register"])) {
                 <button type="submit" name="register">Register</button>
             </div>
         </form>
-        <?php if ($error) : ?>
-            <p id="error-msg">Make sure both passwords are the same!<br>Make sure you uploaded file with the correct extension!</p>
+
+        <?php if (isset($_POST)) : ?>
+
+            <?php if (isset($_POST["error_pw"]) && $_POST["error_pw"]) : ?>
+                <p class="error-msg">Make sure both passwords are the same!
+                <?php endif; ?>
+
+                <?php if (isset($_POST["error_ph"]) && $_POST["error_ph"]) : ?>
+                <p class="error-msg">Make sure you uploaded file with the correct extension!</p>
+            <?php endif; ?>
         <?php endif; ?>
     </main>
 </body>

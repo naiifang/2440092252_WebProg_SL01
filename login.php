@@ -7,26 +7,6 @@ if (isset($_SESSION["verified"]) && $_SESSION["verified"]) {
     exit;
 }
 
-$_SESSION["verified"] = null; // supaya ga langsung ada tulisan wrong acc info
-
-if (isset($_POST["login"])) {
-    $usernameLogin = $_POST["usernameLogin"];
-    $passwordLogin = $_POST["passwordLogin"];
-
-    if (!isset($_SESSION["username"]) || !isset($_SESSION["password"])) {
-        $_SESSION["verified"] = false;
-    } else if (
-        $usernameLogin == $_SESSION["username"]
-        && $passwordLogin == $_SESSION["password"]
-    ) {
-        $_SESSION["verified"] = true;
-        header("Location: home.php");
-        exit;
-    } else {
-        $_SESSION["verified"] = false;
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +28,7 @@ if (isset($_POST["login"])) {
 
     <main>
         <h1>Login</h1>
-        <form action="" method="post" class="flex-col">
+        <form action="./prosesLogin.php" method="post" class="flex-col">
             <div class="form-elements-container flex-col">
                 <div class="form-element">
                     <label for="usernameLogin"> Username </label>
