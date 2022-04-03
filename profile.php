@@ -1,13 +1,15 @@
 <?php
 
 session_start();
-$error = false;
-
-// kalau belum logged in, gabisa akses page ini
 if (!isset($_SESSION['verified']) || !$_SESSION['verified']) {
     header('Location: welcome.php');
     exit;
 }
+
+require "functions.php";
+
+$userID = $_SESSION["apk_user"];
+$user = query("SELECT * FROM users WHERE user_id = $userID")[0];
 
 ?>
 
@@ -38,54 +40,52 @@ if (!isset($_SESSION['verified']) || !$_SESSION['verified']) {
         <div class="profile-elements-container grid">
             <div class="profile-element">
                 <label for="namaDepan"> Nama Depan </label>
-                <input type="text" name="namaDepan" value="<?= $_SESSION['namaDepan']; ?>" readonly>
+                <input type="text" name="namaDepan" value="<?= $user["nama_depan"]; ?>" readonly>
 
             </div>
             <div class="profile-element">
                 <label for="namaTengah"> Nama Tengah </label>
-                <input type="text" name="namaTengah" value="<?= $_SESSION['namaTengah']; ?>" readonly>
+                <input type="text" name="namaTengah" value="<?= $user["nama_tengah"]; ?>" readonly>
             </div>
             <div class="profile-element">
                 <label for="namaBelakang"> Nama Belakang </label>
-                <input type="text" name="namaBelakang" value="<?= $_SESSION['namaBelakang']; ?>" readonly>
+                <input type="text" name="namaBelakang" value="<?= $user["nama_belakang"]; ?>" readonly>
             </div>
             <div class="profile-element">
                 <label for="tempatLahir"> Tempat Lahir </label>
-                <input type="text" name="tempatLahir" value="<?= $_SESSION['tempatLahir']; ?>" readonly>
+                <input type="text" name="tempatLahir" value="<?= $user["tempat_lahir"]; ?>" readonly>
             </div>
             <div class="profile-element">
                 <label for="tanggalLahir"> Tgl Lahir </label>
-                <input type="text" name="tanggalLahir" value="<?= $_SESSION['tanggalLahir']; ?>" readonly>
+                <input type="text" name="tanggalLahir" value="<?= $user["tanggal_lahir"]; ?>" readonly>
             </div>
             <div class="profile-element">
                 <label for="NIK"> NIK </label>
-                <input type="text" name="NIK" value="<?= $_SESSION['NIK']; ?>" readonly>
+                <input type="text" name="NIK" value="<?= $user['NIK']; ?>" readonly>
             </div>
             <div class="profile-element">
                 <label for="kewarganegaraan"> Warga Negara </label>
-                <input type="text" name="kewarganegaraan" value="<?= $_SESSION['kewarganegaraan']; ?>" readonly>
+                <input type="text" name="kewarganegaraan" value="<?= $user['kewarganegaraan']; ?>" readonly>
             </div>
             <div class="profile-element">
                 <label for="email"> Email </label>
-                <input type="text" name="email" value="<?= $_SESSION['email']; ?>" readonly>
+                <input type="text" name="email" value="<?= $user['email']; ?>" readonly>
             </div>
             <div class="profile-element">
                 <label for="HP"> No HP </label>
-                <input type="text" name="HP" value="<?= $_SESSION['HP']; ?>" readonly>
+                <input type="text" name="HP" value="<?= $user['nomor_telepon']; ?>" readonly>
             </div>
             <div class="profile-element">
                 <label for="alamat"> Alamat </label>
-                <textarea name="alamat" rows="5"><?= $_SESSION["alamat"]; ?></textarea>
+                <textarea name="alamat" rows="5"><?= $user["alamat"]; ?></textarea>
             </div>
             <div class="profile-element">
                 <label for="kodepos"> Kode Pos </label>
-                <input type="text" name="kodepos" value="<?= $_SESSION['kodepos']; ?>" readonly>
+                <input type="text" name="kodepos" value="<?= $user['kode_pos']; ?>" readonly>
             </div>
             <div class="profile-element">
                 <label for="foto"> Foto Profil </label>
-                <div>
-                    <img src=<?= "./uploaded/" . $_SESSION['foto'] ?> alt="">
-                </div>
+                <div><img src=<?= "./uploaded/" . $user['foto_profil'] ?> alt=""></div>
             </div>
         </div>
     </main>

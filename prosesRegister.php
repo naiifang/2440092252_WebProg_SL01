@@ -1,51 +1,28 @@
 <?php
 
 session_start();
+if (isset($_SESSION["verified"]) && $_SESSION["verified"]) {
+    header("Location: home.php");
+    exit;
+}
 
-$error_pw = false;
-$error_ph = false;
+require "functions.php";
+
+$registrationError = false;
 
 if (isset($_POST["register"])) {
 
-    // cek password
-    if ($_POST["password"] == $_POST["confirmPassword"]) {
-
-        $_SESSION["namaDepan"] = $_POST["namaDepan"];
-        $_SESSION["namaTengah"] = $_POST["namaTengah"];
-        $_SESSION["namaBelakang"] = $_POST["namaBelakang"];
-        $_SESSION["tempatLahir"] = $_POST["tempatLahir"];
-        $_SESSION["tanggalLahir"] = $_POST["tanggalLahir"];
-        $_SESSION["NIK"] = $_POST["NIK"];
-        $_SESSION["kewarganegaraan"] = $_POST["kewarganegaraan"];
-        $_SESSION["email"] = $_POST["email"];
-        $_SESSION["HP"] = $_POST["HP"];
-        $_SESSION["alamat"] = $_POST["alamat"];
-        $_SESSION["kodepos"] = $_POST["kodepos"];
-        $_SESSION["username"] = $_POST["username"];
-        $_SESSION["password"] = $_POST["password"];
-
-        // cek uploaded file
-        $fileName = $_FILES["foto"]["name"];
-        $fileName = str_replace(' ', '', $fileName); // handle nama file yang ada spasi, tpi blm bisa handle file dgn nama yg sama
-        $tmpName = $_FILES["foto"]["tmp_name"];
-
-        $allowedExt = ["png", "jpg", "jpeg"];
-        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-        if (in_array($ext, $allowedExt)) {
-            $_SESSION["foto"] = $fileName;
-
-            // pindahkan file dari temporary ke terupload
-            $dirUpload = "uploaded/";
-            $terupload = move_uploaded_file($tmpName, $dirUpload . $fileName);
-
-            // balik ke halaman welcome
-            header("Location: welcome.php");
-            exit;
-        } else {
-            $error_ph = true;
-        }
+    if (registrasi($_POST) > 0) {
+        echo "
+            <script>
+                alert('User berhasil ditambahkan!');
+            </script>
+        ";
+        header("Location: welcome.php");
+        exit;
     } else {
-        $error_pw = true;
+        echo mysqli_error($connection);
+        $registrationError = true;
     }
 }
 
@@ -63,8 +40,7 @@ if (isset($_POST["register"])) {
 
 <body>
     <form action="./register.php" method="POST" id="registerFormError">
-        <input type="hidden" name="error_pw" value="<?= $error_pw; ?>">
-        <input type="hidden" name="error_ph" value="<?= $error_ph; ?>">
+        <input type="hidden" name="registrationError" value="<?= $registrationError; ?>">
     </form>
 
     <script>

@@ -1,7 +1,6 @@
 <?php
 
 session_start();
-// kalau sudah logged in, gabisa akses page ini
 if (isset($_SESSION["verified"]) && $_SESSION["verified"]) {
     header("Location: home.php");
     exit;

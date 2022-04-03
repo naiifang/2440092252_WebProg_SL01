@@ -1,17 +1,21 @@
 <?php
 
 session_start();
-
-// kalau belum logged in, gabisa akses page ini
 if (!isset($_SESSION['verified']) || !$_SESSION['verified']) {
     header('Location: welcome.php');
     exit;
 }
 
+require "functions.php";
+
 $namaLengkap = "User";
-if (isset($_SESSION["namaDepan"])) $namaLengkap = $_SESSION["namaDepan"];
-if (isset($_SESSION["namaTengah"])) $namaLengkap .= " " . $_SESSION["namaTengah"];
-if (isset($_SESSION["namaBelakang"])) $namaLengkap .= " " . $_SESSION["namaBelakang"];
+$userID = $_SESSION["apk_user"];
+$user = query("SELECT * FROM users WHERE user_id = $userID")[0];
+
+// var_dump($user);
+$namaLengkap = $user["nama_depan"];
+$namaLengkap .= " " . $user["nama_tengah"];
+$namaLengkap .= " " . $user["nama_belakang"];
 
 ?>
 

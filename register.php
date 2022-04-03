@@ -1,8 +1,6 @@
 <?php
 
 session_start();
-
-// kalau sudah logged in, gabisa akses page ini
 if (isset($_SESSION["verified"]) && $_SESSION["verified"]) {
     header("Location: home.php");
     exit;
@@ -103,13 +101,11 @@ if (isset($_SESSION["verified"]) && $_SESSION["verified"]) {
 
         <?php if (isset($_POST)) : ?>
 
-            <?php if (isset($_POST["error_pw"]) && $_POST["error_pw"]) : ?>
-                <p class="error-msg">Make sure both passwords are the same!
-                <?php endif; ?>
-
-                <?php if (isset($_POST["error_ph"]) && $_POST["error_ph"]) : ?>
-                <p class="error-msg">Make sure you uploaded file with the correct extension!</p>
+            <?php if (isset($_POST["registrationError"]) && $_POST["registrationError"]) : ?>
+                <p class="error-msg">Pastikan kedua password sama</p>
+                <p class="error-msg">Uploadlah file dengan ekstensi yang sesuai ketentuan</p>
             <?php endif; ?>
+
         <?php endif; ?>
     </main>
 </body>
