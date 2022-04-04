@@ -1,0 +1,18 @@
+.form-element img {
+    width: 100%;
+    border: 1px solid black;
+}
+
+@media screen and (max-width: 1024px) {
+    header {
+        font-size: 1em;
+    }
+
+    .app-name {
+        font-size: 1.1em;
+    }
+
+    nav>* {
+        margin: auto 5px;
+    }
+}

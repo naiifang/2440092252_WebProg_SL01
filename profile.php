@@ -88,6 +88,9 @@ $user = query("SELECT * FROM users WHERE user_id = $userID")[0];
                 <div><img src=<?= "./uploaded/" . $user['foto_profil'] ?> alt=""></div>
             </div>
         </div>
+        <div class="buttons-container">
+            <a href="./editProfile.php">Edit</a>
+        </div>
     </main>
 </body>
 

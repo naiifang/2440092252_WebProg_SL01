@@ -29,11 +29,11 @@ function query($query)
 
 
 // cek dan upload gambar
-function upload()
+function upload($var_name)
 {
-    $namaFile = $_FILES['foto']['name'];
+    $namaFile = $_FILES[$var_name]['name'];
     $namaFile = str_replace(' ', '', $namaFile);
-    $tmpName = $_FILES['foto']['tmp_name'];
+    $tmpName = $_FILES[$var_name]['tmp_name'];
 
     $ekstensiGambarValid = ['jpg', 'jpeg', 'png'];
     $ekstensiGambar = pathinfo($namaFile, PATHINFO_EXTENSION);
@@ -63,6 +63,57 @@ function upload()
 }
 
 
+function ubah($data)
+{
+    global $connection;
+    print_r($data);
+
+    $userId = $data["userId"];
+    $namaDepan = $data["namaDepan"];
+    $namaTengah = $data["namaTengah"];
+    $namaBelakang = $data["namaBelakang"];
+    $tempatLahir = $data["tempatLahir"];
+    $tanggalLahir = $data["tanggalLahir"];
+    $NIK = $data["NIK"];
+    $kewarganegaraan = $data["kewarganegaraan"];
+    $email = $data["email"];
+    $HP = $data["HP"];
+    $alamat = $data["alamat"];
+    $kodepos = $data["kodepos"];
+    $namaFile = $_FILES["foto"]["name"];
+
+    // cek apakah user pilih gambar baru atau tidak
+    if ($_FILES["foto"]["error"] === 4) {
+        $namaFile = $data["fotoLama"];
+    } else {
+        if (!upload('foto')) {
+            $namaFile = $data["fotoLama"];
+            return false;
+            exit;
+        }
+    }
+
+    $query = "UPDATE users SET
+                nama_depan = '$namaDepan',
+                nama_tengah = '$namaTengah',
+                nama_belakang = '$namaBelakang',
+                tempat_lahir = '$tempatLahir',
+                tanggal_lahir = '$tanggalLahir',
+                NIK = '$NIK',
+                kewarganegaraan = '$kewarganegaraan',
+                email = '$email',
+                nomor_telepon = '$HP',
+                alamat = '$alamat',
+                kode_pos = '$kodepos',
+                foto_profil = '$namaFile'
+                WHERE user_id = $userId
+            ";
+    mysqli_query($connection, $query);
+
+    return mysqli_affected_rows($connection);
+}
+
+
 function registrasi($data)
 {
     global $connection;
@@ -71,17 +122,17 @@ function registrasi($data)
     $password = mysqli_real_escape_string($connection, $data["password"]);
     $confirmPassword = mysqli_real_escape_string($connection, $data["confirmPassword"]);
 
-    $namaDepan = $_POST["namaDepan"];
-    $namaTengah = $_POST["namaTengah"];
-    $namaBelakang = $_POST["namaBelakang"];
-    $tempatLahir = $_POST["tempatLahir"];
-    $tanggalLahir = $_POST["tanggalLahir"];
-    $NIK = $_POST["NIK"];
-    $kewarganegaraan = $_POST["kewarganegaraan"];
-    $email = $_POST["email"];
-    $HP = $_POST["HP"];
-    $alamat = $_POST["alamat"];
-    $kodepos = $_POST["kodepos"];
+    $namaDepan = $data["namaDepan"];
+    $namaTengah = $data["namaTengah"];
+    $namaBelakang = $data["namaBelakang"];
+    $tempatLahir = $data["tempatLahir"];
+    $tanggalLahir = $data["tanggalLahir"];
+    $NIK = $data["NIK"];
+    $kewarganegaraan = $data["kewarganegaraan"];
+    $email = $data["email"];
+    $HP = $data["HP"];
+    $alamat = $data["alamat"];
+    $kodepos = $data["kodepos"];
     $namaFile = $_FILES["foto"]["name"];
 
     // cek ketersediaan username
@@ -102,7 +153,7 @@ function registrasi($data)
     }
 
     // cek file + upload
-    if (!upload()) {
+    if (!upload('foto')) {
         return false;
     }
 
